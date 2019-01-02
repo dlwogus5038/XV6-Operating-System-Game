@@ -1,0 +1,25 @@
+~* Written by Luke Jaffe (2016) *~
+
+Note that the original xv6 README was replaced with this one.
+
+To run xv6 with the tetris user program, do make qemu as normal.
+
+Build Dependencies: nasm
+
+Display: You will need to be in an environment where the SDL display 
+is available. If you are on a remote machine, you must enable X-forwarding.
+
+/*** CODE ***/
+
+The tetris.c file is just a user space dummy for the tetris sys call. The main
+game loop is implemented in sysproc.c, in the sys_tetris function. This uses
+functions in systetris.h and display.h to control game logic and display the
+game state on the VGA respectively.
+
+To draw the VGA in unchained mode with page flipping, set the MODE_UNCHAINED
+macro to 1 in display.h. The tetris double buffer update is currently not 
+supported in this format, but is close to completion. The issue will be
+visible when running in this format, and requires a little extra logic
+so we don't draw pixels in extra planes. Keep MODE_UNCHAINED as 0 for
+now for expected visuals. There is no apparent difference in performance 
+for the implemented code.
